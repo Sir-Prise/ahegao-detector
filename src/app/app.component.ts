@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
 
     private readonly assetsUrl = environment.baseHref + '/assets';
 
-    private isRunning = true;
+    private isRunning = false;
 
     private cam: HTMLVideoElement;
     private currentFrameCanvas: HTMLCanvasElement;
