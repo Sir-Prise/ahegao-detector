@@ -1,7 +1,13 @@
-<div id="background" [class.is-ahegao]="this.isAhegao">
-    <video id="cam" width="720" height="560" autoplay muted></video>
-    <canvas id="current-frame" width="720" height="560" style="display: none"></canvas>
-    <canvas id="face" width="200" height="200" style="display: none; border:2px solid blue"></canvas>
-    <meter id="output"></meter>
+<div [class.is-ahegao]="isAhegao">
+    <canvas id="face" [attr.width]="faceCanvasSize" [attr.height]="faceCanvasSize"></canvas>
+    <!-- <video #cam width="720" height="560" autoplay muted></video> -->
+
+    <!-- <canvas id="output-canvas" width="200" height="200"></canvas> -->
+    <div #outputVideoWrapper style="width: 50%; position: relative;">
+        <video #cam autoplay muted style="width: 100%; height: 100%; position: absolute;"></video>
+    </div>
+
+    <meter id="output"></meter><br />
+    FPS: <span>{{fps | number:'1.0-1'}}</span><br />
     <button (click)="onToggle()">Toggle</button>
 </div>

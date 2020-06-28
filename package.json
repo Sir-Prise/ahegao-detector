@@ -4,7 +4,6 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "launch-chrome": "\"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe\" --use-fake-device-for-media-stream --use-file-for-fake-video-capture=\".\\test_webcam\\output.y4m\" http://localhost:4200/",
     "build": "ng build --prod --base-href=/Download/Test/cam/",
     "test": "ng test",
     "lint": "ng lint",
