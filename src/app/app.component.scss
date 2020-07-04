@@ -1,3 +1,13 @@
-.is-ahegao {
-    background: hotpink;
+main {
+    max-width: 1600px;
+    margin: auto;
+}
+
+.game {
+    display: flex;
+    height: 100vh;
+
+    @media (orientation: portrait) {
+        flex-direction: column;
+    }
 }

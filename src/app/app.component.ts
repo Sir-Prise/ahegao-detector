@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import * as tf from '@tensorflow/tfjs';
 import { environment } from 'src/environments/environment';
 import { DetectionService } from './services/detection.service';
+import { WebcamComponent } from './components/webcam/webcam.component';
+import { Box } from './services/detection-response.model';
 // import * as tmImage from '@teachablemachine/image';
 // import * as faceapi from 'face-api.js';
 // type faceapi = import('face-api.js');
@@ -25,19 +27,15 @@ const MINIMUM_DELAY = 75;
 })
 export class AppComponent implements OnInit, AfterViewInit {
     public isAhegao = false;
+    public faceRectangle?: Box;
 
     public fps = 0;
 
-    @ViewChild('cam')
-    private cam: ElementRef<HTMLVideoElement>;
-
-    @ViewChild('outputVideoWrapper')
-    private outputVideoWrapper: ElementRef<HTMLDivElement>;
+    private camElement?: HTMLVideoElement;
 
     private readonly assetsUrl = environment.baseHref + '/assets';
 
     private isRunning = true;
-
 
     private analysisDurations = [100, 100, 100, 100, 100];
 
@@ -50,35 +48,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     public async ngAfterViewInit(): Promise<void> {
-        await this.initCamera();
-
         await this.detectionService.load();
 
         await this.analyze();
-    }
-
-    private async initCamera(): Promise<void> {
-        this.cam.nativeElement.srcObject = await navigator.mediaDevices.getUserMedia({
-            audio: false,
-            video: {
-                facingMode: 'user',
-                height: { ideal: 2160 } // Get highest possible resolution
-            }
-        });
-        return new Promise((resolve) => {
-            this.cam.nativeElement.onloadedmetadata = () => {
-                this.updateOutputVideoSize();
-                resolve();
-            };
-        });
-    }
-
-    private updateOutputVideoSize(): void {
-        const width = this.outputVideoWrapper.nativeElement.clientWidth;
-        const height = width / (this.cam.nativeElement.videoWidth / this.cam.nativeElement.videoHeight);
-        this.cam.nativeElement.width = width;
-        this.cam.nativeElement.height = height;
-        this.outputVideoWrapper.nativeElement.style.height = `${height}px`;
     }
 
     public async onToggle() {
@@ -88,20 +60,26 @@ export class AppComponent implements OnInit, AfterViewInit {
             await this.analyze();
         }
     }
+
+    public camLoaded(event: HTMLVideoElement): void {
+        this.camElement = event;
+    }
+
     private async analyze() {
         // Calculate interval
         const averageAnalysisDuration = (this.analysisDurations.reduce((a, b) => a + b, 0) / this.analysisDurations.length) || 0;
 
-        let delay = Math.max((1000 / TARGET_FPS) - averageAnalysisDuration, MINIMUM_DELAY);
-        delay = 0;
+        const delay = Math.max((1000 / TARGET_FPS) - averageAnalysisDuration, MINIMUM_DELAY);
         this.fps = 1000 / (averageAnalysisDuration + delay);
 
         setTimeout(async () => {
             const start = Date.now();
 
             tf.engine().startScope();
-            const result = await this.detectionService.analyse(this.cam.nativeElement);
+            const result = await this.detectionService.analyse(this.camElement);
             (document.getElementById('output') as HTMLMeterElement).value = result.ahegaoProbability;
+            this.faceRectangle = result.face;
+            this.isAhegao = result.isAhegao;
             tf.engine().endScope();
 
             this.analysisDurations.push(Date.now() - start);

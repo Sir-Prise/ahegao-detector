@@ -23,6 +23,7 @@
     "@tensorflow/tfjs": "1.7.0",
     "core-js": "^2.5.4",
     "face-api.js": "^0.22.2",
+    "normalize.css": "^8.0.1",
     "rxjs": "~6.5.5",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"
