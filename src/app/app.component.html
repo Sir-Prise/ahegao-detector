@@ -3,6 +3,7 @@
     <div class="game">
         <app-webcam (loaded)="camLoaded($event)" [recognitionRectangle]="faceRectangle" [class.-is-ahegao]="isAhegao"></app-webcam>
         <div class="game-info-wrapper">
+            <app-device-connector></app-device-connector>
             <meter id="output"></meter><br />
             FPS: <span>{{fps | number:'1.0-1'}}</span><br />
             <button (click)="onToggle()">Toggle</button>

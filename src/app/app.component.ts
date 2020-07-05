@@ -50,7 +50,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     public async ngAfterViewInit(): Promise<void> {
         await this.detectionService.load();
 
-        await this.analyze();
+        // await this.analyze();
     }
 
     public async onToggle() {

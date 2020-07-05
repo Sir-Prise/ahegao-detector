@@ -7,7 +7,7 @@ import { Box } from 'src/app/services/detection-response.model';
     styleUrls: ['./webcam.component.scss']
 })
 export class WebcamComponent implements OnInit, AfterViewInit {
-    
+
     @Input()
     set recognitionRectangle(recognitionRectangle: Box | undefined) {
         this._recognitionRectangle = recognitionRectangle;

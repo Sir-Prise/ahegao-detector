@@ -3,11 +3,13 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { WebcamComponent } from './components/webcam/webcam.component';
+import { DeviceConnectorComponent } from './components/device-connector/device-connector.component';
 
 @NgModule({
     declarations: [
         AppComponent,
-        WebcamComponent
+        WebcamComponent,
+        DeviceConnectorComponent
     ],
     imports: [
         BrowserModule

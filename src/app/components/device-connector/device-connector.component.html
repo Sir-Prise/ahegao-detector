@@ -1,0 +1,8 @@
+<button (click)="startScanning()">Connect vibrator</button>
+<ul>
+    <li *ngFor="let device of deviceService.connectedDevices">
+        {{device.Name}}
+    </li>
+</ul>
+
+<button (click)="test()">Test</button>

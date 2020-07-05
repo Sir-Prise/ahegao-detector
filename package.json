@@ -21,6 +21,8 @@
     "@angular/router": "~9.1.7",
     "@teachablemachine/image": "^0.8.4",
     "@tensorflow/tfjs": "1.7.0",
+    "buffer": "^5.6.0",
+    "buttplug": "^0.13.1",
     "core-js": "^2.5.4",
     "face-api.js": "^0.22.2",
     "normalize.css": "^8.0.1",
