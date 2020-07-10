@@ -6,7 +6,10 @@
             <app-device-connector></app-device-connector>
             <meter id="output"></meter><br />
             FPS: <span>{{fps | number:'1.0-1'}}</span><br />
-            <button (click)="onToggle()">Toggle</button>
+            <button (click)="onToggle()">Play/Pause</button><br />
+            <meter [value]="(progressService.intensity$ | async)?.intensity"></meter><br />
+            <span style="font:monospace">{{(progressService.intensity$ | async)?.intensity | number:'1.2-2'}}</span>
+            <button (click)="onToggleIsAhegao()">Toggle isAhegao</button>
         </div>
     </div>
 </main>

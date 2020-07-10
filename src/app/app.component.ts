@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { DetectionService } from './services/detection.service';
 import { WebcamComponent } from './components/webcam/webcam.component';
 import { Box } from './services/detection-response.model';
+import { ProgressService } from './services/progress.service';
 // import * as tmImage from '@teachablemachine/image';
 // import * as faceapi from 'face-api.js';
 // type faceapi = import('face-api.js');
@@ -41,6 +42,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     constructor(
         private readonly detectionService: DetectionService,
+        public readonly progressService: ProgressService,
     ) {
     }
 
@@ -59,6 +61,11 @@ export class AppComponent implements OnInit, AfterViewInit {
         if (this.isRunning) {
             await this.analyze();
         }
+    }
+
+    public onToggleIsAhegao() {
+        this.isAhegao = !this.isAhegao;
+        this.progressService.setState(this.isAhegao);
     }
 
     public camLoaded(event: HTMLVideoElement): void {
