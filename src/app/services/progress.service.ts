@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { DeviceService } from './device.service';
 
 /* The following constants define how fast the user progresses = how fast the intesity increases.
  * The key of the objects mean the current intesity and the values set how the intesity changes absolutely in one second.
@@ -41,21 +42,44 @@ export class ProgressService {
     private lastState = false;
     private lastStateChange: number;
 
+    private isPaused = false;
+
     private lastUpdate: number;
     private lastBaseIntensity = 0;
 
     private startTime = Date.now();
     private previousTime = 0;
 
-    constructor() {
-        setInterval(this.updateProgress.bind(this), 400);
+    constructor(
+        private readonly deviceService: DeviceService,
+    ) {
+        // setInterval(this.updateProgress.bind(this), 400);
     }
 
     public setState(isIncresing: boolean) {
         this.isIncreasing = isIncresing;
     }
 
-    private updateProgress(): void {
+    public pause(pause = true): void {
+        this.isPaused = pause;
+
+        if (pause) {
+            this.previousTime += Date.now() - this.startTime;
+            this.deviceService.setIntesity(0);
+        } else {
+            this.startTime = Date.now();
+            this.lastUpdate = undefined;
+            this.lastStateChange = undefined;
+        }
+
+        this.updateProgress();
+    }
+
+    public updateProgress(): void {
+        if (this.isPaused) {
+            return;
+        }
+
         // Get time since last progress update
         const now = Date.now();
         if (!this.lastUpdate) {
@@ -78,14 +102,16 @@ export class ProgressService {
         this.lastBaseIntensity = newBaseIntensity;
 
         // Add intensity if currently active
-        const activeIntensity = isIncreasing ? 0.15 : 0;
+        const activeIntensity = isIncreasing ? Math.min(0.15, 1 - newBaseIntensity) : 0;
         const newIntensity = newBaseIntensity + activeIntensity;
 
+        // Output
         this.intensity$.next({
             intensity: newIntensity,
             baseIntensity: newBaseIntensity,
             activeIntensity
         });
+        this.deviceService.setIntesity(newIntensity);
     }
 
     /**

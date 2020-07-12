@@ -5,6 +5,7 @@ import { DetectionService } from './services/detection.service';
 import { WebcamComponent } from './components/webcam/webcam.component';
 import { Box } from './services/detection-response.model';
 import { ProgressService } from './services/progress.service';
+import { DeviceService } from './services/device.service';
 // import * as tmImage from '@teachablemachine/image';
 // import * as faceapi from 'face-api.js';
 // type faceapi = import('face-api.js');
@@ -31,12 +32,13 @@ export class AppComponent implements OnInit, AfterViewInit {
     public faceRectangle?: Box;
 
     public fps = 0;
+    public isRunning = true;
+    public isPaused = false;
 
     private camElement?: HTMLVideoElement;
 
     private readonly assetsUrl = environment.baseHref + '/assets';
 
-    private isRunning = true;
 
     private analysisDurations = [100, 100, 100, 100, 100];
 
@@ -52,13 +54,14 @@ export class AppComponent implements OnInit, AfterViewInit {
     public async ngAfterViewInit(): Promise<void> {
         await this.detectionService.load();
 
-        // await this.analyze();
+        await this.analyze();
     }
 
-    public async onToggle() {
-        this.isRunning = !this.isRunning;
+    public async onPause(pause = true) {
+        this.isRunning = !pause;
+        this.progressService.pause(pause);
 
-        if (this.isRunning) {
+        if (!pause) {
             await this.analyze();
         }
     }
@@ -87,6 +90,8 @@ export class AppComponent implements OnInit, AfterViewInit {
             (document.getElementById('output') as HTMLMeterElement).value = result.ahegaoProbability;
             this.faceRectangle = result.face;
             this.isAhegao = result.isAhegao;
+            this.progressService.setState(this.isAhegao);
+            this.progressService.updateProgress();
             tf.engine().endScope();
 
             this.analysisDurations.push(Date.now() - start);
