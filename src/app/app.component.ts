@@ -54,6 +54,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     public async ngAfterViewInit(): Promise<void> {
         await this.detectionService.load();
 
+        this.onPause(); ////////////////// TODO: Remove line
         await this.analyze();
     }
 

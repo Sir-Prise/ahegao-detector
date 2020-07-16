@@ -1,0 +1,36 @@
+div {
+    padding: .6rem;
+    margin-bottom: .6rem;
+    border-radius: .3rem;
+    display: flex;
+
+    &.error {
+        background: #fdd;
+        color: #600;
+
+        .icon {
+            color: #b00;
+        }
+    }
+    &.warning {
+        background: #ffc;
+        color: #440;
+
+        .icon {
+            color: #664;
+        }
+    }
+    &.info {
+        background: #eef;
+        color: #006;
+
+        .icon {
+            color: #00b;
+        }
+    }
+
+    .icon {
+        font-size: 1.6em;
+        margin: -.3em .3em -.3em 0;
+    }
+}

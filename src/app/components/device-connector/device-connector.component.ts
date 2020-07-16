@@ -8,6 +8,10 @@ import { DeviceService } from 'src/app/services/device.service';
 })
 export class DeviceConnectorComponent implements OnInit {
 
+    public readonly isIos = !!/(iPad|iPod|iPhone)/.exec(navigator.platform);
+    public readonly supportsBluetooth = !!(navigator as any).bluetooth;
+    public readonly hasBluetooth$ = (navigator as any).bluetooth?.getAvailability();
+
     constructor(
         public readonly deviceService: DeviceService
     ) { }

@@ -1,0 +1,13 @@
+@import '../../../../node_modules/typicons.font/src/font/typicons.css';
+
+// Overwrite location of font
+@font-face {
+    font-family: 'typicons';
+    font-weight: normal;
+    font-style: normal;
+    src: url('/assets/typicons/typicons.eot');
+    src: url('/assets/typicons/typicons.eot?#iefix') format('embedded-opentype'),
+         url('/assets/typicons/typicons.woff') format('woff'),
+         url('/assets/typicons/typicons.ttf') format('truetype'),
+         url('/assets/typicons/typicons.svg#typicons') format('svg');
+}

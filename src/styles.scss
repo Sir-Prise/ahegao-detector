@@ -3,4 +3,25 @@
 
 body {
     background-color: lighten($color-primary, 10%);
+    color: rgba(0, 0, 0, .97);
+}
+
+button {
+    background: #fff;
+    border: 1px solid #eee;
+    padding: .3em;
+    margin-bottom: .3em;
+    border-radius: .3em;
+    box-shadow: .1em .1em .4em rgba(0, 0, 0, .05);
+    color: rgba(0, 0, 0, .9);
+    transition: box-shadow .3s;
+
+    &:hover, &:focus {
+        box-shadow: .1em .1em .7em rgba(0, 0, 0, .2);
+        cursor: pointer;
+        outline: none;
+    }
+    &:active {
+        box-shadow: none;
+    }
 }
