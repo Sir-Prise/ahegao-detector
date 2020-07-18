@@ -1,9 +1,11 @@
-@import '../node_modules/normalize.css/normalize.css';
+@import '~normalize.css/normalize.css';
 @import 'variables';
+@import 'open-sans';
 
 body {
     background-color: lighten($color-primary, 10%);
     color: rgba(0, 0, 0, .97);
+    font-family: 'Open Sans', Arial, Helvetica, sans-serif;
 }
 
 button {
