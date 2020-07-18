@@ -1,27 +1,36 @@
-<button (click)="startScanning()">
-    <app-typicon [icon]="'heart'"></app-typicon>
+<button (click)="toggleCollapse()">
+    <app-typicon [icon]="'heart'" class="heart"></app-typicon>
     Connect vibrator
 </button>
-<div>
-    <app-alert *ngIf="isIos" [type]="'error'">
-        Currently connecting bluetooth devices to the browser is not supported on iOS :(. Please use a computer or Android device.
-    </app-alert>
-    <app-alert *ngIf="!supportsBluetooth" [type]="'error'">
-        Your browser doesn't support bluetooth. Please use an other browser like the current Google Chrome.
-    </app-alert>
-    <app-alert *ngIf="supportsBluetooth && !(hasBluetooth$ | async)" [type]="'error'">
-        Your device hasn't bluetooth. You could use an USB bluetooth adapter or switch to a different device like a laptop or smartphone.
-    </app-alert>
-</div>
-<div>
-    <span *ngIf="!deviceService.connectedDevices; else devicesList">No devices connected</span>
-    <ng-template #devicesList>
-        <ul>
-            <li *ngFor="let device of deviceService.connectedDevices">
-                {{device.Name}}
-            </li>
-        </ul>
-    </ng-template>
-</div>
+<div *ngIf="!collapsed">
+    <p>
+        You can connect your bluetooth toys with this game. When you can control your vibrator with an app on your phone,
+        the chances are high that you can connect it here, too. Check out
+        <a href="https://iostindex.com/?filter0Availability=Available,DIY&filter1ButtplugSupport=2" target="_blank" rel="noopener nofollow">this list</a>
+        to see which devices are supported.
+    </p>
+    <div>
+        <app-alert *ngIf="isIos" [type]="'error'">
+            Currently connecting bluetooth devices to the browser is not supported on iOS :(. Please use a computer or Android device.
+        </app-alert>
+        <app-alert *ngIf="!supportsBluetooth" [type]="'error'">
+            Your browser doesn't support bluetooth. Please use an other browser like the current Google Chrome.
+        </app-alert>
+        <app-alert *ngIf="supportsBluetooth && (hasBluetooth$ | async) === false" [type]="'error'">
+            Your device hasn't bluetooth. You could use an USB bluetooth adapter or switch to a different device like a laptop or smartphone.
+        </app-alert>
+    </div>
 
-<button (click)="test()">Test</button>
+    <div>
+        <span *ngIf="!deviceService.connectedDevices; else devicesList">No devices connected</span>
+        <ng-template #devicesList>
+            <ul>
+                <li *ngFor="let device of deviceService.connectedDevices">
+                    {{device.Name}}
+                </li>
+            </ul>
+        </ng-template>
+    </div>
+    <button (click)="startScanning()">Search for bluetooth devices</button>
+    <button (click)="test()">Test</button>
+</div>

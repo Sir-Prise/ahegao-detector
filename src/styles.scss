@@ -7,13 +7,13 @@ body {
 }
 
 button {
-    background: #fff;
+    background: hotpink;
     border: 1px solid #eee;
-    padding: .3em;
+    padding: .3em .5em;
     margin-bottom: .3em;
     border-radius: .3em;
     box-shadow: .1em .1em .4em rgba(0, 0, 0, .05);
-    color: rgba(0, 0, 0, .9);
+    color: #fff;
     transition: box-shadow .3s;
 
     &:hover, &:focus {
@@ -23,5 +23,14 @@ button {
     }
     &:active {
         box-shadow: none;
+    }
+}
+
+a {
+    color: hotpink;
+    text-decoration: none;
+
+    &:hover, &:focus {
+        text-decoration: underline;
     }
 }

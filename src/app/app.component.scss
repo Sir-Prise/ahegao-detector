@@ -11,3 +11,15 @@ main {
         flex-direction: column;
     }
 }
+
+.game-info-wrapper {
+    background: #fff;
+    padding: 1.5rem;
+
+    @media (orientation: landscape) {
+        margin-left: 1rem;
+        flex-shrink: 0;
+        width: 20rem;
+        max-width: 40%;
+    }
+}
