@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DeviceService } from 'src/app/services/device.service';
+import { ButtplugClientDevice } from 'buttplug';
 
 @Component({
     selector: 'app-device-connector',
@@ -10,13 +11,36 @@ export class DeviceConnectorComponent implements OnInit {
 
     public collapsed = true;
 
-    public readonly isIos = !!/(iPad|iPod|iPhone)/.exec(navigator.platform);
     public readonly supportsBluetooth = !!(navigator as any).bluetooth;
-    public readonly hasBluetooth$ = (navigator as any).bluetooth?.getAvailability();
+    public readonly isIos = !this.supportsBluetooth && !!/(iPad|iPod|iPhone)/.exec(navigator.platform);
+    public readonly hasBluetooth$: Promise<boolean> | undefined = (navigator as any).bluetooth?.getAvailability();
+
+    public devices: Array<{status: 'connected' | 'disconnected', device: ButtplugClientDevice}> = [];
+    public isDeviceConnected = false;
+    public isTesting = false;
+
+    public error?: string;
 
     constructor(
-        public readonly deviceService: DeviceService
-    ) { }
+        private readonly deviceService: DeviceService
+    ) {
+        // Using an own list of devices instead of this.deviceService.connectedDevices to be able to list disconnected devices
+        this.deviceService.deviceChanges$.subscribe((event) => {
+            // Remove existing devices with the same name and old status
+            this.devices = this.devices.filter((device) => {
+                return device.device.Name !== event.device.Name || device.status === event.event;
+            });
+            // Add device
+            this.devices.push({device: event.device, status: event.event});
+
+            this.isDeviceConnected = !!this.deviceService.connectedDevices.length;
+        });
+
+        // Display errors caused by DeviceService
+        this.deviceService.errors$.subscribe((error: Error) => {
+            this.error = error.message;
+        });
+    }
 
     public ngOnInit(): void {
     }
@@ -30,9 +54,11 @@ export class DeviceConnectorComponent implements OnInit {
     }
 
     public async test(): Promise<void> {
+        this.isTesting = true;
         await this.deviceService.setIntesity(0.2);
         setTimeout(async () => {
             await this.deviceService.setIntesity(0);
+            this.isTesting = false;
         }, 1000);
     }
 }

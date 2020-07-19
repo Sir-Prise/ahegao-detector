@@ -6,6 +6,7 @@ import { WebcamComponent } from './components/webcam/webcam.component';
 import { DeviceConnectorComponent } from './components/device-connector/device-connector.component';
 import { TypiconComponent } from './components/typicon/typicon.component';
 import { AlertComponent } from './components/alert/alert.component';
+import { ButtonDirective } from './components/directives/button.directive';
 
 @NgModule({
     declarations: [
@@ -13,7 +14,8 @@ import { AlertComponent } from './components/alert/alert.component';
         WebcamComponent,
         DeviceConnectorComponent,
         TypiconComponent,
-        AlertComponent
+        AlertComponent,
+        ButtonDirective
     ],
     imports: [
         BrowserModule

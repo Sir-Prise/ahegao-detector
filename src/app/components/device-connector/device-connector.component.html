@@ -1,12 +1,13 @@
-<button (click)="toggleCollapse()">
-    <app-typicon [icon]="'heart'" class="heart"></app-typicon>
+<button (click)="toggleCollapse()" *ngIf="collapsed" class="primary">
+    <app-typicon [icon]="'heart'"></app-typicon>
     Connect vibrator
 </button>
 <div *ngIf="!collapsed">
+    <h3>Connect vibrator</h3>
     <p>
         You can connect your bluetooth toys with this game. When you can control your vibrator with an app on your phone,
         the chances are high that you can connect it here, too. Check out
-        <a href="https://iostindex.com/?filter0Availability=Available,DIY&filter1ButtplugSupport=2" target="_blank" rel="noopener nofollow">this list</a>
+        <a href="https://iostindex.com/?filter0ButtplugSupport=2" target="_blank" rel="noopener nofollow">this list</a>
         to see which devices are supported.
     </p>
     <div>
@@ -21,16 +22,32 @@
         </app-alert>
     </div>
 
-    <div>
-        <span *ngIf="!deviceService.connectedDevices; else devicesList">No devices connected</span>
-        <ng-template #devicesList>
-            <ul>
-                <li *ngFor="let device of deviceService.connectedDevices">
-                    {{device.Name}}
-                </li>
-            </ul>
-        </ng-template>
+    <div *ngIf="hasBluetooth$ | async">
+        <div>
+            <p *ngIf="!devices.length; else devicesList">No devices connected</p>
+            <ng-template #devicesList>
+                <ul class="devices-list">
+                    <li *ngFor="let device of devices">
+                        <app-typicon [icon]="'chevron-right'" [uppercase]="true"></app-typicon> {{device.device.Name}} –
+                        <span *ngIf="device.status === 'connected'; else disconnected" class="connected">
+                            Connected <app-typicon [icon]="'wi-fi'" [uppercase]="true"></app-typicon>
+                        </span>
+                        <ng-template #disconnected>
+                            <span class="disconnected">
+                                Disconnected <app-typicon [icon]="'cancel'" [uppercase]="true"></app-typicon>
+                            </span>
+                        </ng-template>
+                    </li>
+                </ul>
+                <button (click)="test()" [disabled]="isTesting || !isDeviceConnected" appAutoBlur>
+                    {{!isDeviceConnected ? 'No device connected' : (!isTesting ? 'Test vibration' : 'Testing...')}}
+                </button>
+            </ng-template>
+        </div>
+        <button (click)="startScanning()" class="primary" appAutoBlur>Search for bluetooth devices</button>
+
+        <app-alert *ngIf="error" [type]="'error'">
+            Error: {{error}} (Buttplug.io)
+        </app-alert>
     </div>
-    <button (click)="startScanning()">Search for bluetooth devices</button>
-    <button (click)="test()">Test</button>
 </div>

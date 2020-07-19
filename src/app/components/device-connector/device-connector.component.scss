@@ -1,3 +1,15 @@
 :host {
     display: block;
 }
+
+.devices-list {
+    list-style: none outside none;
+    padding: 0;
+
+    .connected {
+        color: hotpink;
+    }
+    .disconnected {
+        color: #b11;
+    }
+}
