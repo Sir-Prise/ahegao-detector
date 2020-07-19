@@ -17,11 +17,13 @@ button {
     margin-bottom: .3em;
     border-radius: .3em;
     box-shadow: .1em .1em .4em rgba(0, 0, 0, .05);
-    transition: all .3s;
 
     &.primary {
         background: hotpink;
         color: #fff;
+        &:hover, &:focus {
+            box-shadow: .1em .1em .7em rgba(0, 0, 0, .2);
+        }
     }
 
     &:disabled {
@@ -32,9 +34,10 @@ button {
     }
 
     &:hover, &:focus {
-        box-shadow: .1em .1em .7em rgba(0, 0, 0, .2);
+        box-shadow: .1em .1em .7em rgba(0, 0, 0, .1);
         cursor: pointer;
         outline: none;
+        transform: translateY(-1px);
     }
     &:active {
         box-shadow: none;
@@ -47,5 +50,23 @@ a {
 
     &:hover, &:focus {
         text-decoration: underline;
+    }
+}
+
+.bold {
+    font-weight: bold;
+}
+.italic {
+    font-style: italic;
+}
+
+.is-landscape {
+    @media (orientation: portrait) {
+        display: none;
+    }
+}
+.is-portrait {
+    @media (orientation: landscape) {
+        display: none;
     }
 }

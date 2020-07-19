@@ -28,6 +28,7 @@ const MINIMUM_DELAY = 75;
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, AfterViewInit {
+    public welcomeScreen = true;
     public isAhegao = false;
     public faceRectangle?: Box;
 

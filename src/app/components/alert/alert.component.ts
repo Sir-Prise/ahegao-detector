@@ -1,14 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostBinding } from '@angular/core';
 
 @Component({
     selector: 'app-alert',
     templateUrl: './alert.component.html',
-    styleUrls: ['./alert.component.scss']
+    styleUrls: ['./alert.component.scss'],
 })
 export class AlertComponent implements OnInit {
 
     @Input()
-    public type: 'error' | 'warning' | 'info';
+    public type: 'error' | 'warning' | 'info' | 'tip' | 'privacy';
+
+    @HostBinding('class')
+    public class: string;
 
     public get icon(): string {
         switch (this.type) {
@@ -16,6 +19,10 @@ export class AlertComponent implements OnInit {
                 return 'delete';
             case 'warning':
                 return 'warning';
+            case 'tip':
+                return 'lightbulb';
+            case 'privacy':
+                return 'lock-closed';
             default:
                 return 'info-large';
         }
@@ -24,6 +31,7 @@ export class AlertComponent implements OnInit {
     constructor() { }
 
     ngOnInit(): void {
+        this.class = this.type;
     }
 
 }

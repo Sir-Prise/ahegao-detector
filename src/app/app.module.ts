@@ -7,6 +7,7 @@ import { DeviceConnectorComponent } from './components/device-connector/device-c
 import { TypiconComponent } from './components/typicon/typicon.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { ButtonDirective } from './components/directives/button.directive';
+import { WelcomeComponent } from './components/welcome/welcome.component';
 
 @NgModule({
     declarations: [
@@ -15,7 +16,8 @@ import { ButtonDirective } from './components/directives/button.directive';
         DeviceConnectorComponent,
         TypiconComponent,
         AlertComponent,
-        ButtonDirective
+        ButtonDirective,
+        WelcomeComponent
     ],
     imports: [
         BrowserModule

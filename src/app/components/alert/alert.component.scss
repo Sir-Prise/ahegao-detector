@@ -1,4 +1,4 @@
-div {
+:host {
     padding: .6rem;
     margin-bottom: .6rem;
     border-radius: .3rem;
@@ -26,6 +26,22 @@ div {
 
         .icon {
             color: #00b;
+        }
+    }
+    &.tip {
+        background: #dfd;
+        color: #060;
+
+        .icon {
+            color: #0b0;
+        }
+    }
+    &.privacy {
+        background: #ffe6f2;
+        color: #241619;
+
+        .icon {
+            color: hotpink;
         }
     }
 
