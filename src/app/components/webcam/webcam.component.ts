@@ -6,7 +6,7 @@ import { Box } from 'src/app/services/detection-response.model';
     templateUrl: './webcam.component.html',
     styleUrls: ['./webcam.component.scss']
 })
-export class WebcamComponent implements OnInit, AfterViewInit {
+export class WebcamComponent {
 
     @Input()
     set recognitionRectangle(recognitionRectangle: Box | undefined) {
@@ -31,9 +31,6 @@ export class WebcamComponent implements OnInit, AfterViewInit {
     }
     private _recognitionRectangle?: Box;
 
-    @Output()
-    public loaded = new EventEmitter<HTMLVideoElement>();
-
     @ViewChild('cam')
     private cam: ElementRef<HTMLVideoElement>;
 
@@ -41,32 +38,17 @@ export class WebcamComponent implements OnInit, AfterViewInit {
     private recognitionRectangleElement: ElementRef<HTMLDivElement>;
 
     private componentWidth = 0;
-    private componentHeight = 0;
 
     constructor(
         private component: ElementRef
     ) { }
 
-    public ngOnInit(): void {
-    }
-
-    public async ngAfterViewInit(): Promise<void> {
-        await this.initCamera();
-        this.loaded.emit(this.cam.nativeElement);
-    }
-
-    private async initCamera(): Promise<void> {
-        this.cam.nativeElement.srcObject = await navigator.mediaDevices.getUserMedia({
-            audio: false,
-            video: {
-                facingMode: 'user',
-                height: { ideal: 2160 } // Get highest possible resolution
-            }
-        });
+    public setVideoStream(stream: MediaStream): Promise<HTMLVideoElement> {
+        this.cam.nativeElement.srcObject = stream;
         return new Promise((resolve) => {
             this.cam.nativeElement.onloadedmetadata = () => {
                 this.updateOutputVideoSize();
-                resolve();
+                resolve(this.cam.nativeElement);
             };
         });
     }
@@ -94,7 +76,6 @@ export class WebcamComponent implements OnInit, AfterViewInit {
         }
 
         this.componentWidth = width;
-        this.componentHeight = height;
         this.cam.nativeElement.width = width;
         this.cam.nativeElement.height = height;
         this.component.nativeElement.style.width = `${width}px`;

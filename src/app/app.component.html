@@ -1,9 +1,10 @@
 <main>
 
     <div class="game">
-        <app-welcome *ngIf="welcomeScreen">Ja hallo auf meiner Website</app-welcome>
-        <app-webcam *ngIf="!welcomeScreen" (loaded)="camLoaded($event)" [recognitionRectangle]="faceRectangle" [class.-is-ahegao]="isAhegao"></app-webcam>
+        <app-welcome *ngIf="!webcamConnector.showWebcam"></app-welcome>
+        <app-webcam #webcam [recognitionRectangle]="faceRectangle" [class.-is-ahegao]="isAhegao" [class.-is-hidden]="!webcamConnector.showWebcam"></app-webcam>
         <div class="game-info-wrapper">
+            <app-webcam-connector #webcamConnector [webcamComponent]="webcam" (loaded)="camLoaded($event)"></app-webcam-connector>
             <app-device-connector></app-device-connector>
             <meter id="output"></meter><br />
             FPS: <span>{{fps | number:'1.0-1'}}</span><br />

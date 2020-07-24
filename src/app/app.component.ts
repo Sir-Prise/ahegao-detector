@@ -53,10 +53,6 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
 
     public async ngAfterViewInit(): Promise<void> {
-        await this.detectionService.load();
-
-        this.onPause(); ////////////////// TODO: Remove line
-        await this.analyze();
     }
 
     public async onPause(pause = true) {
@@ -75,6 +71,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     public camLoaded(event: HTMLVideoElement): void {
         this.camElement = event;
+        this.analyze();
     }
 
     private async analyze() {

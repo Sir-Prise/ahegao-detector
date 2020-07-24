@@ -1,4 +1,12 @@
 :host {
     background: #fff;
     padding: 1.5rem;
+
+    @media (orientation: portrait) {
+        margin-top: 1em;
+    }
+}
+
+h1 {
+    margin-top: .3em;
 }

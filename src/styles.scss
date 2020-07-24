@@ -31,6 +31,12 @@ button {
         border-color: #bbb;
         color: #666;
         box-shadow: none;
+
+        &.primary {
+            background: #eee;
+            color: #888;
+            border-color: #eee;
+        }
     }
 
     &:hover, &:focus {

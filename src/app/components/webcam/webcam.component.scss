@@ -17,6 +17,20 @@
         transition: box-shadow 500ms;
         z-index: 1;
     }
+
+    &.-is-ahegao {
+        &:before {
+            box-shadow: 0 0 100px transparentize($color-primary-active, 0.3) inset;
+        }
+    
+        .recognition-rectangle {
+            border-color: $color-primary-active;
+        }
+    }
+
+    &.-is-hidden {
+        display: none;
+    }
 }
 
 video {
@@ -35,15 +49,4 @@ video {
     height: 0;
     opacity: 0;
     transition: all 1000ms
-}
-
-:host.-is-ahegao {
-    &:before {
-        box-shadow: 0 0 100px transparentize($color-primary-active, 0.3) inset;
-        // box-shadow: 0 0 100px #ff69b4b0 inset;
-    }
-
-    .recognition-rectangle {
-        border-color: $color-primary-active;
-    }
 }
