@@ -20,6 +20,7 @@ import { WebcamConnectorComponent } from './components/webcam-connector/webcam-c
         ButtonDirective,
         WelcomeComponent,
         WebcamConnectorComponent
+        // TODO: Split module
     ],
     imports: [
         BrowserModule

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import * as tf from '@tensorflow/tfjs';
-import { environment } from 'src/environments/environment';
 import { DetectionResponseModel, Box } from './detection-response.model';
 declare var faceapi: any;
 
