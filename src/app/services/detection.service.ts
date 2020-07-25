@@ -9,7 +9,7 @@ declare var faceapi: any;
 })
 export class DetectionService {
 
-    private readonly assetsUrl = environment.baseHref + '/assets';
+    private readonly assetsUrl = '/assets';
     private readonly faceapiOptions = new faceapi.TinyFaceDetectorOptions({inputSize: 512, scoreThreshold: 0.5});
     private readonly faceCanvasSize = 75;
     private readonly ahegaoThreshold = 0.6;

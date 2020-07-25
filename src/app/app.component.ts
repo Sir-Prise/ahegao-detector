@@ -38,7 +38,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     private camElement?: HTMLVideoElement;
 
-    private readonly assetsUrl = environment.baseHref + '/assets';
+    private readonly assetsUrl = '/assets';
 
 
     private analysisDurations = [100, 100, 100, 100, 100];
