@@ -9,6 +9,7 @@ import { AlertComponent } from './components/alert/alert.component';
 import { ButtonDirective } from './components/directives/button.directive';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { WebcamConnectorComponent } from './components/webcam-connector/webcam-connector.component';
+import { ProgressComponent } from './components/progress/progress.component';
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { WebcamConnectorComponent } from './components/webcam-connector/webcam-c
         AlertComponent,
         ButtonDirective,
         WelcomeComponent,
-        WebcamConnectorComponent
+        WebcamConnectorComponent,
+        ProgressComponent
         // TODO: Split module
     ],
     imports: [

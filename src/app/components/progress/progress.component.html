@@ -1,0 +1,16 @@
+<div
+    class="progress-border"
+    [class.--empty]="intensity == 0"
+    [class.--no-arrow]="intensity > 0.8"
+    [class.--shaking]="intensity >= 1"
+    [class.--is-increasing]="isIncreasing"
+>
+    <div class="progress-wrapper">
+        <div class="progress" [style.flex-basis.%]="intensity * 100"></div>
+        <app-typicon class="arrow arrow-up" [class.visible]="isIncreasing" [icon]="'arrow-sorted-up'"></app-typicon>
+        <app-typicon class="arrow arrow-down" [class.visible]="isDecreasing" [icon]="'arrow-sorted-down'"></app-typicon>
+        <app-typicon class="arrow arrow-right" [class.visible]="isIncreasing" [icon]="'chevron-right'"></app-typicon>
+        <app-typicon class="arrow arrow-left" [class.visible]="isDecreasing" [icon]="'chevron-left'"></app-typicon>
+    </div>
+    <app-typicon class="heart" [icon]="'heart'" [class.--outline]="intensity > 0.9"></app-typicon>
+</div>

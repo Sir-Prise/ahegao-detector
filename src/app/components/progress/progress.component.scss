@@ -1,0 +1,163 @@
+// $hotterpink: #f90f84;
+
+.progress-border {
+    $width: 3rem; // Width including border
+    $height: 15rem;
+    $border-width: .14rem;
+
+    $inner-width: $width - 4 * $border-width;
+
+    border: $border-width solid pink;
+    border-radius: $width / 2;
+    height: $height;
+    width: $inner-width;
+    padding: $border-width;
+    position: relative;
+    transition: opacity .5s;
+
+    @media (orientation: portrait) {
+        // Display horizontal in portrait mode
+        height: $inner-width;
+        width: $height;
+    }
+
+    &.--is-increasing {
+        border-color: hotpink;
+
+        .progress {
+            background: hotpink !important;
+        }
+    }
+
+    &.--empty {
+        opacity: .8;
+    }
+
+    &.--shaking {
+        animation: shaking 250ms steps(1) infinite;
+        @keyframes shaking {
+            0% {transform: translate(.05em, 0)}
+            25% {transform: translate(-.05em, -.02em)}
+            50% {transform: translate(.05em, 0)}
+            75% {transform: translate(-.05em, .02em)}
+        }
+    }
+
+    &.--no-arrow {
+        .arrow {
+            opacity: 0 !important;
+        }
+    }
+
+    .progress-wrapper {
+        height: 100%;
+        width: 100%;
+        border-radius: $inner-width / 2;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column-reverse;
+
+        @media (orientation: portrait) {
+            flex-direction: row;
+        }
+
+        .progress {
+            background: pink;
+            flex-shrink: 0;
+            transition: flex-basis 200ms;
+        }
+
+        .arrow {
+            text-align: center;
+            font-size: 1.5em;
+            color: rgba(0, 0, 0, .4);
+            transition: all 0s;
+            opacity: 0;
+            height: 0;
+            width: 0;
+
+            &.arrow-up {
+                margin-bottom: -.3em;
+                animation: 2s infinite point-up;
+
+                @media (orientation: portrait) {
+                    display: none;
+                }
+            }
+
+            &.arrow-down {
+                margin-bottom: .3em;
+                padding-bottom: .2em;
+                animation: 2s infinite point-down;
+                
+                @media (orientation: portrait) {
+                    display: none;
+                }
+            }
+
+            &.arrow-right {
+                margin-left: -.3em;
+                padding-top: .05em;
+                
+                @media (orientation: landscape) {
+                    display: none;
+                }
+            }
+
+            &.arrow-left {
+                margin-left: .3em;
+                padding-top: .05em;
+                
+                @media (orientation: landscape) {
+                    display: none;
+                }
+            }
+
+            &.visible {
+                margin-bottom: 0;
+                margin-left: 0;
+                opacity: 1;
+                height: 1.4em;
+                width: 1.4em;
+                transition: opacity .3s, margin-bottom .3s, margin-left .3s, transform .3s, height 0s;
+
+                @media (orientation: landscape) {
+                    width: auto;
+                }
+            }
+
+            @keyframes point-up {
+                0% {transform: translateY(0)}
+                50% {transform: translateY(0)}
+                75% {transform: translateY(-.15em)}
+                100% {transform: translateY(0)}
+            }
+
+            @keyframes point-down {
+                0% {transform: translateY(0)}
+                50% {transform: translateY(0)}
+                75% {transform: translateY(.15em)}
+                100% {transform: translateY(0)}
+            }
+        }
+    }
+
+    .heart {
+        position: absolute;
+        width: $width - 2 * $border-width;
+        right: 0;
+        top: 0;
+        font-size: 2rem;
+        text-align: center;
+        color: hotpink;
+
+        @media (orientation: portrait) {
+            margin-top: -.1em;
+        }
+
+        &.--outline {
+            -webkit-text-stroke-color: #fff;
+            -webkit-text-stroke-width: 2px;
+        }
+    }
+}

@@ -1,5 +1,4 @@
 <main>
-
     <div class="game">
         <app-welcome *ngIf="!webcamConnector.showWebcam"></app-welcome>
         <app-webcam #webcam [recognitionRectangle]="faceRectangle" [class.-is-ahegao]="isAhegao" [class.-is-hidden]="!webcamConnector.showWebcam"></app-webcam>
@@ -10,8 +9,11 @@
             FPS: <span>{{fps | number:'1.0-1'}}</span><br />
             <button (click)="onPause()" appAutoBlur>Pause</button><br />
             <button (click)="onPause(false)">Play</button><br />
-            <meter [value]="(progressService.intensity$ | async)?.intensity"></meter><br />
-            <span style="font:monospace">{{(progressService.intensity$ | async)?.intensity | number:'1.2-2'}}</span>
+            <app-progress
+                [intensity]="deviceService.intensity$ | async"
+                [isIncreasing]="(progressService.intensity$ | async)?.activeIntensity"
+                [isDecreasing]="(progressService.intensity$ | async)?.activeIntensity === 0 && (progressService.intensity$ | async)?.intensity > 0"
+            ></app-progress>
             <button (click)="onToggleIsAhegao()">Toggle isAhegao</button>
         </div>
     </div>

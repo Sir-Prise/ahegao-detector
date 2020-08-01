@@ -11,6 +11,11 @@ export class DeviceService {
     public deviceChanges$ = new Subject<{event: 'connected' | 'disconnected', device: ButtplugClientDevice}>();
     public errors$ = new Subject<Error>();
 
+    private _intensity$ = new Subject<number>();
+    public get intensity$(): Subject<number> {
+        return this._intensity$;
+    }
+
     private readonly connector = new ButtplugEmbeddedClientConnector();
     private readonly client = new ButtplugClient('Ahegao Detector');
     private clientConnected = false;
@@ -34,6 +39,7 @@ export class DeviceService {
 
     public async setIntesity(intensity: number): Promise<void> {
         try {
+            this._intensity$.next(intensity);
             if (intensity <= 0) {
                 // Stop all
                 for (const device of this.connectedDevices) {

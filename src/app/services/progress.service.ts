@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { DeviceService } from './device.service';
 
 /* The following constants define how fast the user progresses = how fast the intesity increases.
@@ -53,7 +53,6 @@ export class ProgressService {
     constructor(
         private readonly deviceService: DeviceService,
     ) {
-        // setInterval(this.updateProgress.bind(this), 400);
     }
 
     public setState(isIncresing: boolean) {

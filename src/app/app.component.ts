@@ -46,6 +46,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     constructor(
         private readonly detectionService: DetectionService,
         public readonly progressService: ProgressService,
+        public readonly deviceService: DeviceService,
     ) {
     }
 
