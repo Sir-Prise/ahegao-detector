@@ -31,6 +31,9 @@ export class WebcamComponent {
     }
     private _recognitionRectangle?: Box;
 
+    @Input()
+    public isLoading = true;
+
     @ViewChild('cam')
     private cam: ElementRef<HTMLVideoElement>;
 

@@ -35,6 +35,9 @@ export class DetectionService {
         await faceapi.loadTinyFaceDetectorModel(this.assetsUrl + '/model-face');
 
         this.ahegaoModel = await ahegaoModelPromise;
+
+        // Immediately analyse empty picture to load model
+        // TODO
     }
 
     public async analyse(camElement: HTMLVideoElement): Promise<DetectionResponseModel> {

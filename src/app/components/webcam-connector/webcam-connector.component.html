@@ -2,10 +2,6 @@
     <app-typicon [icon]="'video'" [uppercase]="true"></app-typicon>
     Start camera
 </button>
-<div *ngIf="showLoading" class="loading-wrapper">
-    <div class="loader"></div>
-    Loading...
-</div>
 <app-alert *ngIf="(hasWebcam | async) === false" [type]="'error'">
     You need a webcam to use this website.
 </app-alert>

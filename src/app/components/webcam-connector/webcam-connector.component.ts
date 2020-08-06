@@ -6,7 +6,6 @@ import { WebcamComponent } from '../webcam/webcam.component';
 @Component({
     selector: 'app-webcam-connector',
     templateUrl: './webcam-connector.component.html',
-    styleUrls: ['./webcam-connector.component.scss']
 })
 export class WebcamConnectorComponent implements OnInit {
 
@@ -17,7 +16,6 @@ export class WebcamConnectorComponent implements OnInit {
     public loaded = new EventEmitter<HTMLMediaElement>();
 
     public showWebcam = false;
-    public showLoading = false;
     public showNotAllowedError = false;
     public error: string | undefined;
 
@@ -53,9 +51,9 @@ export class WebcamConnectorComponent implements OnInit {
             this.showNotAllowedError = false;
             this.isWebcamLoaded$ = from(this.webcamComponent.setVideoStream(videoStream));
 
-            this.showLoading = true;
+            this.webcamComponent.isLoading = true;
             forkJoin([this.isWebcamLoaded$, this.isModelLoaded$]).subscribe(([webcam]) => {
-                this.showLoading = false;
+                this.webcamComponent.isLoading = false;
                 this.loaded.emit(webcam);
             });
 
@@ -71,6 +69,6 @@ export class WebcamConnectorComponent implements OnInit {
 
     private disconnect(): void {
         this.showWebcam = false;
-        this.showLoading = false;
+        this.webcamComponent.isLoading = false;
     }
 }
