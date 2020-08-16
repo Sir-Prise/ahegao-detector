@@ -61,7 +61,7 @@ export class DetectionLoopService {
         // Calculate interval
         const averageAnalysisDuration = (this.analysisDurations.reduce((a, b) => a + b, 0) / this.analysisDurations.length) || 0;
 
-        const delay = Math.max((1000 / TARGET_FPS) - averageAnalysisDuration, MINIMUM_DELAY);
+        let delay = Math.max((1000 / TARGET_FPS) - averageAnalysisDuration, MINIMUM_DELAY);
 
         // FPS
         const fps = 1000 / (averageAnalysisDuration + delay);
@@ -69,6 +69,13 @@ export class DetectionLoopService {
             this.isSlow = true;
         } else {
             this.isSlow = false;
+        }
+
+        // Power safe mode if there was no face visible for a while
+        if (this.timeSinceLastFace > 20000) {
+            delay += 5000;
+        } else if (this.timeSinceLastFace > 10000) {
+            delay += 1000;
         }
 
         setTimeout(async () => {

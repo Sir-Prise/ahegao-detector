@@ -2,6 +2,9 @@
     <app-typicon [icon]="'video'" [uppercase]="true"></app-typicon>
     Start camera
 </button>
+<app-alert *ngIf="isFirefox" [type]="'warning'">
+    Face detection currently doesn't work on Firefox. Please use a different browser, for example Google Chrome.
+</app-alert>
 <app-alert *ngIf="(hasWebcam | async) === false" [type]="'error'">
     You need a webcam to use this website.
 </app-alert>

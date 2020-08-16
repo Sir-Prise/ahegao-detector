@@ -20,6 +20,7 @@ export class WebcamConnectorComponent implements OnInit {
     public error: string | undefined;
 
     public readonly hasWebcam = navigator.mediaDevices.enumerateDevices().then((info) => !!info.length);
+    public readonly isFirefox = typeof window['InstallTrigger'] !== 'undefined';
 
     private isModelLoaded$: Observable<void>;
     private isWebcamLoaded$: Observable<HTMLMediaElement>;
