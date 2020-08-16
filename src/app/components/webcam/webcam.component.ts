@@ -34,6 +34,12 @@ export class WebcamComponent {
     @Input()
     public isLoading = true;
 
+    @Input()
+    public isSlow = false;
+
+    @Input()
+    public isNoFaceDetected = false;
+
     @ViewChild('cam')
     private cam: ElementRef<HTMLVideoElement>;
 

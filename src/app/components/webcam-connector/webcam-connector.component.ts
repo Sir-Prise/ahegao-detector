@@ -58,7 +58,7 @@ export class WebcamConnectorComponent implements OnInit {
             });
 
         } catch (e) {
-            console.log(e);
+            console.error(e);
             if (e.name === 'NotAllowedError') {
                 this.showNotAllowedError = true;
             } else {

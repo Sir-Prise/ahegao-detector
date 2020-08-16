@@ -3,7 +3,7 @@
     [class.--empty]="intensity == 0"
     [class.--no-arrow]="intensity > 0.8"
     [class.--shaking]="intensity >= 1"
-    [class.--is-increasing]="isIncreasing"
+    [class.--is-increasing]="isIncreasing || intensity >= 1"
 >
     <div class="progress-wrapper">
         <div class="progress" [style.flex-basis.%]="intensity * 100"></div>

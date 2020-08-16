@@ -1,20 +1,24 @@
 <main>
     <div class="game">
         <app-welcome *ngIf="!webcamConnector.showWebcam"></app-welcome>
-        <app-webcam #webcam [recognitionRectangle]="faceRectangle" [class.-is-ahegao]="isAhegao" [class.-is-hidden]="!webcamConnector.showWebcam"></app-webcam>
+        <app-webcam
+            #webcam
+            [recognitionRectangle]="detectionLoopService.isRunning ? detectionLoopService.faceRectangle : undefined"
+            [isSlow]="detectionLoopService.isRunning && detectionLoopService.isSlow"
+            [isNoFaceDetected]="detectionLoopService.isRunning && detectionLoopService.isNoFaceDetected"
+            [class.-is-ahegao]="detectionLoopService.isRunning && detectionLoopService.isAhegao"
+            [class.-is-hidden]="!webcamConnector.showWebcam"
+        ></app-webcam>
         <div class="game-info-wrapper">
             <app-webcam-connector #webcamConnector [webcamComponent]="webcam" (loaded)="camLoaded($event)"></app-webcam-connector>
             <app-device-connector></app-device-connector>
-            <meter id="output"></meter><br />
-            FPS: <span>{{fps | number:'1.0-1'}}</span><br />
             <button (click)="onPause()" appAutoBlur>Pause</button><br />
-            <button (click)="onPause(false)">Play</button><br />
+            <button (click)="onResume()">Play</button><br />
             <app-progress
                 [intensity]="deviceService.intensity$ | async"
-                [isIncreasing]="(progressService.intensity$ | async)?.activeIntensity"
-                [isDecreasing]="(progressService.intensity$ | async)?.activeIntensity === 0 && (progressService.intensity$ | async)?.intensity > 0"
+                [isIncreasing]="detectionLoopService.isRunning && (progressService.intensity$ | async)?.activeIntensity"
+                [isDecreasing]="detectionLoopService.isRunning && (progressService.intensity$ | async)?.activeIntensity === 0 && (progressService.intensity$ | async)?.intensity > 0"
             ></app-progress>
-            <button (click)="onToggleIsAhegao()">Toggle isAhegao</button>
         </div>
     </div>
 </main>

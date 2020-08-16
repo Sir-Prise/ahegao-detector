@@ -94,3 +94,11 @@ video {
         }
     }
 }
+
+.alerts {
+    position: absolute;
+    left: .6rem;
+    right: .6rem;
+    bottom: 0;
+    z-index: 1;
+}

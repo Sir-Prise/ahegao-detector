@@ -4,3 +4,11 @@
     <div class="spinner"></div>
     Loading...
 </div>
+<div class="alerts">
+    <app-alert *ngIf="isSlow" [type]="'warning'">
+        Analyzing takes more than one second. You might want to switch to a faster device.
+    </app-alert>
+    <app-alert *ngIf="isNoFaceDetected" [type]="'warning'">
+        No face detected.
+    </app-alert>
+</div>
