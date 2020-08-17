@@ -3,6 +3,7 @@
         <app-welcome *ngIf="!webcamConnector.showWebcam"></app-welcome>
         <app-webcam
             #webcam
+            [isLoading]="detectionLoopService.isLoading"
             [recognitionRectangle]="detectionLoopService.isRunning ? detectionLoopService.faceRectangle : undefined"
             [isSlow]="detectionLoopService.isRunning && detectionLoopService.isSlow"
             [isNoFaceDetected]="detectionLoopService.isRunning && detectionLoopService.isNoFaceDetected"
@@ -12,13 +13,19 @@
         <div class="game-info-wrapper">
             <app-webcam-connector #webcamConnector [webcamComponent]="webcam" (loaded)="camLoaded($event)"></app-webcam-connector>
             <app-device-connector></app-device-connector>
-            <button (click)="onPause()" appAutoBlur>Pause</button><br />
-            <button (click)="onResume()">Play</button><br />
             <app-progress
                 [intensity]="deviceService.intensity$ | async"
                 [isIncreasing]="detectionLoopService.isRunning && (progressService.intensity$ | async)?.activeIntensity"
                 [isDecreasing]="detectionLoopService.isRunning && (progressService.intensity$ | async)?.activeIntensity === 0 && (progressService.intensity$ | async)?.intensity > 0"
             ></app-progress>
+            <button (click)="onPause()" appAutoBlur *ngIf="detectionLoopService.isRunning && webcamConnector.showWebcam">
+                <app-typicon [icon]="'media-pause'" [uppercase]="true"></app-typicon>
+                Pause
+            </button>
+            <button (click)="onResume()" appAutoBlur *ngIf="!detectionLoopService.isRunning">
+                <app-typicon [icon]="'media-play'" [uppercase]="true"></app-typicon>
+                Play
+            </button>
         </div>
     </div>
 </main>

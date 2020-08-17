@@ -7,6 +7,7 @@
 
     $inner-width: $width - 4 * $border-width;
 
+    margin: 2rem 0;
     border: $border-width solid pink;
     border-radius: $width / 2;
     height: $height;

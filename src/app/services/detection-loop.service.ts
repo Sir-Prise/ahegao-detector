@@ -27,6 +27,7 @@ export class DetectionLoopService {
     public faceRectangle?: Box;
     public isRunning = true;
     public isSlow = false;
+    public isLoading = true;
 
     /**
      * Says if no face was detected for a while. Switches to low FPS mode.
@@ -104,6 +105,8 @@ export class DetectionLoopService {
             } else {
                 this.timeSinceLastFace = 0;
             }
+
+            this.isLoading = false;
 
             await this.loop();
         }, delay);

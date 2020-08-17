@@ -54,7 +54,6 @@ export class WebcamConnectorComponent implements OnInit {
 
             this.webcamComponent.isLoading = true;
             forkJoin([this.isWebcamLoaded$, this.isModelLoaded$]).subscribe(([webcam]) => {
-                this.webcamComponent.isLoading = false;
                 this.loaded.emit(webcam);
             });
 
