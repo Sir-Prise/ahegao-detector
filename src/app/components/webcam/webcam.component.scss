@@ -101,4 +101,8 @@ video {
     right: .6rem;
     bottom: 0;
     z-index: 1;
+
+    @media (orientation: portrait) {
+        bottom: 3.4rem;
+    }
 }

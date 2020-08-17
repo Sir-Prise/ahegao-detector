@@ -9,17 +9,35 @@ main {
 
     @media (orientation: portrait) {
         flex-direction: column;
+
+        app-webcam {
+            align-self: center;
+        }
     }
 }
 
 .game-info-wrapper {
     background: #fff;
     padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
 
     @media (orientation: landscape) {
         margin-left: 1rem;
         flex-shrink: 0;
         width: 20rem;
         max-width: 40%;
+    }
+}
+
+@media (orientation: portrait) {
+    app-webcam:not(.-is-hidden) {
+        & + .game-info-wrapper {
+            app-progress {
+                position: absolute;
+                margin-top: -5rem;
+                align-self: center;
+            }
+        }
     }
 }

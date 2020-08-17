@@ -73,7 +73,8 @@ export class WebcamComponent {
 
         const maxWidth = this.component.nativeElement.clientWidth;
         const maxHeight = window.innerHeight;
-        const aspectRatio = this.cam.nativeElement.videoWidth / this.cam.nativeElement.videoHeight;
+        // const aspectRatio = this.cam.nativeElement.videoWidth / this.cam.nativeElement.videoHeight;
+        const aspectRatio = 9 / 16;
 
         // Calculate largest possible size
         let width = maxWidth;
