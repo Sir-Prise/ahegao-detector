@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ButtplugClientDevice, ButtplugClient, ButtplugEmbeddedClientConnector } from 'buttplug';
+import type { ButtplugClientDevice } from 'buttplug';
 import { Subject } from 'rxjs';
+
+/**
+ * Currently, the Buttplug library mustn't get minified. To avoid having the whole project unminified, the library is included as additional
+ * script and not usual import.
+ */
 
 @Injectable({
     providedIn: 'root'
@@ -16,9 +21,11 @@ export class DeviceService {
         return this._intensity$;
     }
 
-    private readonly connector = new ButtplugEmbeddedClientConnector();
-    private readonly client = new ButtplugClient('Ahegao Detector');
+    private readonly connector = new window['Buttplug'].ButtplugEmbeddedClientConnector();
+    private readonly client = new window['Buttplug'].ButtplugClient('Ahegao Detector');
     private clientConnected = false;
+    private runningCommand?: Promise<any>;
+    private inPriority = false;
 
     constructor() {
         this.client.addListener('deviceadded', this.onDeviceAdded.bind(this));
@@ -37,22 +44,39 @@ export class DeviceService {
         }
     }
 
-    public async setIntesity(intensity: number): Promise<void> {
+    /**
+     * Sets the intensity (vibration, stroking speed, etc.) of all connected devices
+     * @param intensity Value between 0 and 1
+     * @param priority If set to true, the intensity remains until an other call with priority was made.
+     */
+    public async setIntesity(intensity: number, priority = false): Promise<void> {
         try {
+            if (this.inPriority && !priority) {
+                return;
+            }
+            if (priority) {
+                this.inPriority = intensity > 0;
+            }
+
+            // There mustn't be commands running at the same time, so wait if there's currently one on the way.
+            await this.runningCommand;
+
             this._intensity$.next(intensity);
             if (intensity <= 0) {
                 // Stop all
                 for (const device of this.connectedDevices) {
-                    device.SendStopDeviceCmd();
+                    this.runningCommand = device.SendStopDeviceCmd();
                 }
                 return;
             }
             for (const device of this.connectedDevices) {
                 if (device.AllowedMessages.includes('VibrateCmd')) {
-                    device.SendVibrateCmd(intensity);
+                    this.runningCommand = device.SendVibrateCmd(intensity);
                 }
                 // TODO: Other types
             }
+            await this.runningCommand;
+            this.runningCommand = undefined;
         } catch (e) {
             this.errorHandler(e);
         }

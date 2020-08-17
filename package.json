@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --optimization=false",
+    "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -22,7 +22,6 @@
     "@teachablemachine/image": "^0.8.4",
     "@tensorflow/tfjs": "1.7.0",
     "buffer": "^5.6.0",
-    "buttplug": "^0.13.1",
     "core-js": "^2.5.4",
     "face-api.js": "^0.22.2",
     "normalize.css": "^8.0.1",
@@ -40,6 +39,7 @@
     "@types/node": "^12.11.1",
     "@types/jasmine": "~2.8.8",
     "@types/jasminewd2": "~2.0.3",
+    "buttplug": "^0.13.1",
     "codelyzer": "^5.1.2",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",

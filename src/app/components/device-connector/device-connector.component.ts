@@ -55,9 +55,9 @@ export class DeviceConnectorComponent implements OnInit {
 
     public async test(): Promise<void> {
         this.isTesting = true;
-        await this.deviceService.setIntesity(0.2);
+        await this.deviceService.setIntesity(0.2, true);
         setTimeout(async () => {
-            await this.deviceService.setIntesity(0);
+            await this.deviceService.setIntesity(0, true);
             this.isTesting = false;
         }, 1000);
     }

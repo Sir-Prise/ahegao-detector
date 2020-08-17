@@ -91,6 +91,11 @@ export class DetectionLoopService {
             const result = await this.detectionService.analyse(this.camElement);
             tf.engine().endScope();
 
+            if (!this.isRunning) {
+                // Check again in case it got paused during analysis
+                return;
+            }
+
             this.faceRectangle = result.face;
             this.isAhegao$.next(result.isAhegao);
             this.progressService.setState(result.isAhegao);
