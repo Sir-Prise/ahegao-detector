@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, HostListener} from '@angular/core';
 import { ProgressService } from './services/progress.service';
 import { DeviceService } from './services/device.service';
 import { DetectionLoopService } from './services/detection-loop.service';
@@ -22,6 +22,11 @@ export class AppComponent implements OnInit {
         this.detectionLoopService.isAhegao$.subscribe((isAhegao) => {
             document.querySelector('meta[name="theme-color"]').setAttribute('content',  isAhegao ? '#ff69b4' : '#ffe9ec');
         });
+    }
+
+    @HostListener('window:beforeunload', ['$event'])
+    public onTabClose() {
+        this.deviceService.setIntesity(0, true);
     }
 
     public async onPause(): Promise<void> {
