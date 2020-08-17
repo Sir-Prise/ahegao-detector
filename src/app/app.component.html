@@ -7,7 +7,7 @@
             [recognitionRectangle]="detectionLoopService.isRunning ? detectionLoopService.faceRectangle : undefined"
             [isSlow]="detectionLoopService.isRunning && detectionLoopService.isSlow"
             [isNoFaceDetected]="detectionLoopService.isRunning && detectionLoopService.isNoFaceDetected"
-            [class.-is-ahegao]="detectionLoopService.isRunning && detectionLoopService.isAhegao"
+            [class.-is-ahegao]="detectionLoopService.isRunning && detectionLoopService.isAhegao$ | async"
             [class.-is-hidden]="!webcamConnector.showWebcam"
         ></app-webcam>
         <div class="game-info-wrapper">

@@ -3,6 +3,7 @@ import { DetectionService } from './detection.service';
 import { Box } from './detection-response.model';
 import * as tf from '@tensorflow/tfjs';
 import { ProgressService } from './progress.service';
+import { Subject } from 'rxjs';
 
 /**
  * Ideal number of analysis per seconds
@@ -23,7 +24,7 @@ const MINIMUM_DELAY = 75;
     providedIn: 'root'
 })
 export class DetectionLoopService {
-    public isAhegao = false;
+    public isAhegao$ = new Subject<boolean>();
     public faceRectangle?: Box;
     public isRunning = true;
     public isSlow = false;
@@ -91,8 +92,8 @@ export class DetectionLoopService {
             tf.engine().endScope();
 
             this.faceRectangle = result.face;
-            this.isAhegao = result.isAhegao;
-            this.progressService.setState(this.isAhegao);
+            this.isAhegao$.next(result.isAhegao);
+            this.progressService.setState(result.isAhegao);
             this.progressService.updateProgress();
 
             const analysisDuration = Date.now() - start;

@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { ProgressService } from './services/progress.service';
 import { DeviceService } from './services/device.service';
 import { DetectionLoopService } from './services/detection-loop.service';
@@ -8,7 +8,7 @@ import { DetectionLoopService } from './services/detection-loop.service';
     templateUrl: './app.component.html',
     styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
     private camElement: HTMLVideoElement;
 
     constructor(
@@ -16,6 +16,12 @@ export class AppComponent {
         public readonly progressService: ProgressService,
         public readonly deviceService: DeviceService,
     ) {
+    }
+
+    public ngOnInit(): void {
+        this.detectionLoopService.isAhegao$.subscribe((isAhegao) => {
+            document.querySelector('meta[name="theme-color"]').setAttribute('content',  isAhegao ? '#ff69b4' : '#ffe9ec');
+        });
     }
 
     public async onPause(): Promise<void> {
