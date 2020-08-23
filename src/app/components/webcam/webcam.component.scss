@@ -33,6 +33,12 @@
     }
 }
 
+.mirror {
+    width: 100%;
+    height: 100%;
+    transform: scaleX(-1);
+}
+
 video {
     position: absolute;
     width: 100%;

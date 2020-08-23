@@ -1,5 +1,7 @@
-<video #cam autoplay muted></video>
-<div #recognitionRectangle class="recognition-rectangle"></div>
+<div class="mirror">
+    <video #cam autoplay muted></video>
+    <div #recognitionRectangle class="recognition-rectangle"></div>
+</div>
 <div *ngIf="isLoading" class="loading-overlay">
     <div class="spinner"></div>
     Loading...
