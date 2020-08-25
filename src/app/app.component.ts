@@ -26,7 +26,8 @@ export class AppComponent implements OnInit {
 
     @HostListener('window:beforeunload', ['$event'])
     public onTabClose() {
-        this.deviceService.setIntesity(0, true);
+        // Try to send a stop command before the browser kills the script
+        this.deviceService.forceStop();
     }
 
     public async onPause(): Promise<void> {

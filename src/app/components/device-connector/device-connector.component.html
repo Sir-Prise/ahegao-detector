@@ -12,7 +12,9 @@
     </p>
     <div>
         <app-alert *ngIf="isIos" [type]="'error'">
-            Currently connecting bluetooth devices to the browser is not supported on iOS :(. Please use a computer or Android device.
+            Bluetooth is currently not available on the usual browsers on iOS :(. You can either try
+            <a href="https://apps.apple.com/us/app/webble/id1193531073" target="_blank" rel="noopener nofollow">this browser</a>
+            or use a computer or Android device instead.
         </app-alert>
         <app-alert *ngIf="!supportsBluetooth" [type]="'error'">
             Your browser doesn't support bluetooth. Please use an other browser like the current Google Chrome.
@@ -46,6 +48,10 @@
         </div>
         <button (click)="startScanning()" class="primary" appAutoBlur>Search for bluetooth devices</button>
 
+        <app-alert *ngIf="isUnknownConnectionError" [type]="'error'">
+            Error while connecting to the device. Usually it helps to restart the browser.<br />
+            Note that on mobile devices you have to open the list of recently used apps and swipe the browser out of that list to fully close it.
+        </app-alert>
         <app-alert *ngIf="error" [type]="'error'">
             Error: {{error}} (Buttplug.io)
         </app-alert>

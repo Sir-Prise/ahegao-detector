@@ -20,6 +20,7 @@ export class DeviceConnectorComponent implements OnInit {
     public isTesting = false;
 
     public error?: string;
+    public isUnknownConnectionError = false;
 
     constructor(
         private readonly deviceService: DeviceService
@@ -38,6 +39,12 @@ export class DeviceConnectorComponent implements OnInit {
 
         // Display errors caused by DeviceService
         this.deviceService.errors$.subscribe((error: Error) => {
+            // Handle known error messages
+            if (error.message.includes('Connection failed for unknown reason')) {
+                this.isUnknownConnectionError = true;
+                return;
+            }
+
             this.error = error.message;
         });
     }
