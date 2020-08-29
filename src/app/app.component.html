@@ -4,7 +4,7 @@
         <app-webcam
             #webcam
             [isLoading]="detectionLoopService.isLoading"
-            [recognitionRectangle]="detectionLoopService.isRunning ? detectionLoopService.faceRectangle : undefined"
+            [recognitionRectangle]="detectionLoopService.isRunning ? (detectionLoopService.detection | async)?.face : undefined"
             [isSlow]="detectionLoopService.isRunning && detectionLoopService.isSlow"
             [isNoFaceDetected]="detectionLoopService.isRunning && detectionLoopService.isNoFaceDetected"
             [class.-is-ahegao]="detectionLoopService.isRunning && detectionLoopService.isAhegao$ | async"
@@ -26,6 +26,10 @@
                 <app-typicon [icon]="'media-play'" [uppercase]="true"></app-typicon>
                 Play
             </button>
+            <ng-container *ngIf="detectionLoopService.isComparing">
+                <meter [value]="(detectionLoopService.detection | async)?.ahegaoProbability" [style.background]="(detectionLoopService.detection | async)?.ahegaoProbability > 0.6 ? 'hotpink' : 'none'"></meter>
+                <meter [value]="(detectionLoopService.detection | async)?.ahegaoProbabilityCompare" [style.background]="(detectionLoopService.detection | async)?.ahegaoProbabilityCompare > 0.6 ? 'hotpink' : 'none'"></meter>
+            </ng-container>
         </div>
     </div>
 </main>

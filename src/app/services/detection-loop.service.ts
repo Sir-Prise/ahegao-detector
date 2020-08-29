@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { DetectionService } from './detection.service';
-import { Box } from './detection-response.model';
+import { Box, DetectionResponseModel } from './detection-response.model';
 import * as tf from '@tensorflow/tfjs';
 import { ProgressService } from './progress.service';
 import { Subject } from 'rxjs';
@@ -25,7 +25,6 @@ const MINIMUM_DELAY = 75;
 })
 export class DetectionLoopService {
     public isAhegao$ = new Subject<boolean>();
-    public faceRectangle?: Box;
     public isRunning = true;
     public isSlow = false;
     public isLoading = true;
@@ -36,6 +35,9 @@ export class DetectionLoopService {
     public get isNoFaceDetected(): boolean {
         return this.timeSinceLastFace > 5000;
     }
+
+    public isComparing = false;
+    public detection = new Subject<DetectionResponseModel>();
 
     private camElement: HTMLVideoElement;
     private analysisDurations = [100, 100, 100, 100, 100]; // init with default values
@@ -96,15 +98,18 @@ export class DetectionLoopService {
                 return;
             }
 
-            this.faceRectangle = result.face;
+            this.detection.next(result);
             this.isAhegao$.next(result.isAhegao);
             this.progressService.setState(result.isAhegao);
             this.progressService.updateProgress();
+            if (result.ahegaoProbabilityCompare !== undefined) {
+                this.isComparing = true;
+            }
 
             const analysisDuration = Date.now() - start;
             this.analysisDurations.push();
             this.analysisDurations.shift();
-            console.log(`Analysis took ${analysisDuration}ms ${new Date().toISOString()}`);
+            console.log(`Propability: ${Math.round(result.ahegaoProbability * 100).toString().padStart(2, ' ')}% in ${analysisDuration}ms`);
 
             if (!result.face) {
                 this.timeSinceLastFace += delay + analysisDuration;
