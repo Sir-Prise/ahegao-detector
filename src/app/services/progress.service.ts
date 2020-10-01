@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { DeviceService } from './device.service';
+import { AnalyticsService } from './analytics.service';
 
 /* The following constants define how fast the user progresses = how fast the intesity increases.
  * The key of the objects mean the current intesity and the values set how the intesity changes absolutely in one second.
@@ -50,6 +51,8 @@ export class ProgressService {
     private startTime = Date.now();
     private previousTime = 0;
 
+    private didIncrease = false;
+
     constructor(
         private readonly deviceService: DeviceService,
     ) {
@@ -57,6 +60,10 @@ export class ProgressService {
 
     public setState(isIncresing: boolean) {
         this.isIncreasing = isIncresing;
+        if (isIncresing && !this.didIncrease) {
+            this.didIncrease = true;
+            AnalyticsService.event('first ahegao');
+        }
     }
 
     public pause(pause = true): void {

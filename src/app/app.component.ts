@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener} from '@angular/core';
 import { ProgressService } from './services/progress.service';
 import { DeviceService } from './services/device.service';
 import { DetectionLoopService } from './services/detection-loop.service';
+import { AnalyticsService } from './services/analytics.service';
 
 @Component({
     selector: 'app-root',
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit {
         public readonly progressService: ProgressService,
         public readonly deviceService: DeviceService,
     ) {
+        AnalyticsService.initialize();
     }
 
     public ngOnInit(): void {

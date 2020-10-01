@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import type { ButtplugClientDevice } from 'buttplug';
 import { Subject } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
+import { AnalyticsService } from './analytics.service';
 
 /**
  * Currently, the Buttplug library mustn't get minified. To avoid having the whole project unminified, the library is included as additional
@@ -104,6 +105,7 @@ export class DeviceService {
     private onDeviceAdded(device: ButtplugClientDevice): void {
         this.connectedDevices.push(device);
         this.deviceChanges$.next({event: 'connected', device});
+        AnalyticsService.event('device added', device.Name);
     }
 
     private onDeviceRemoved(device: ButtplugClientDevice): void {

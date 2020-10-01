@@ -2,6 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { DetectionService } from 'src/app/services/detection.service';
 import { Observable, from, forkJoin } from 'rxjs';
 import { WebcamComponent } from '../webcam/webcam.component';
+import { AnalyticsService } from 'src/app/services/analytics.service';
 
 @Component({
     selector: 'app-webcam-connector',
@@ -51,6 +52,7 @@ export class WebcamConnectorComponent implements OnInit {
             this.showWebcam = true;
             this.showNotAllowedError = false;
             this.isWebcamLoaded$ = from(this.webcamComponent.setVideoStream(videoStream));
+            AnalyticsService.event('cam connected');
 
             this.webcamComponent.isLoading = true;
             forkJoin([this.isWebcamLoaded$, this.isModelLoaded$]).subscribe(([webcam]) => {
