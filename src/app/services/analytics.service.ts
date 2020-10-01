@@ -23,7 +23,7 @@ export class AnalyticsService {
     private static updateConnectionStatus(): void {
         const isOffline = !navigator['connection'].downlink;
         if (AnalyticsService.isOffline && !isOffline) {
-            AnalyticsService.event('restored internet connection');
+            AnalyticsService.event('restored internet connection', 'internet');
         }
         AnalyticsService.isOffline = isOffline;
     }

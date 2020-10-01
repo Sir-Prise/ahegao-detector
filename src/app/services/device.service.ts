@@ -105,7 +105,7 @@ export class DeviceService {
     private onDeviceAdded(device: ButtplugClientDevice): void {
         this.connectedDevices.push(device);
         this.deviceChanges$.next({event: 'connected', device});
-        AnalyticsService.event('device added', device.Name);
+        AnalyticsService.event('device added', 'devices', device.Name);
     }
 
     private onDeviceRemoved(device: ButtplugClientDevice): void {

@@ -62,7 +62,7 @@ export class ProgressService {
         this.isIncreasing = isIncresing;
         if (isIncresing && !this.didIncrease) {
             this.didIncrease = true;
-            AnalyticsService.event('first ahegao');
+            AnalyticsService.event('first ahegao', 'game');
         }
     }
 

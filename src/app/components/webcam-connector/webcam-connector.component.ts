@@ -52,7 +52,7 @@ export class WebcamConnectorComponent implements OnInit {
             this.showWebcam = true;
             this.showNotAllowedError = false;
             this.isWebcamLoaded$ = from(this.webcamComponent.setVideoStream(videoStream));
-            AnalyticsService.event('cam connected');
+            AnalyticsService.event('cam connected', 'cam');
 
             this.webcamComponent.isLoading = true;
             forkJoin([this.isWebcamLoaded$, this.isModelLoaded$]).subscribe(([webcam]) => {
