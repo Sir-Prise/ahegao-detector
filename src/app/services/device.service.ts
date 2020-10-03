@@ -47,7 +47,7 @@ export class DeviceService {
             }
 
             this.intensity$.pipe(
-                throttleTime(THROTTLE_TIME)
+                throttleTime(THROTTLE_TIME, undefined, {leading: false, trailing: true})
             ).subscribe((intensity) => this.sendIntensity(intensity));
 
             await this.client.StartScanning();
