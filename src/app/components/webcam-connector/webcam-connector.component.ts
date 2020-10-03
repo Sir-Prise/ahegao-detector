@@ -52,6 +52,11 @@ export class WebcamConnectorComponent implements OnInit {
             this.showWebcam = true;
             this.showNotAllowedError = false;
             this.isWebcamLoaded$ = from(this.webcamComponent.setVideoStream(videoStream));
+            window.scrollTo({
+                top: 0,
+                left: 0,
+                behavior: 'smooth'
+            });
             AnalyticsService.event('cam connected', 'cam');
 
             this.webcamComponent.isLoading = true;
