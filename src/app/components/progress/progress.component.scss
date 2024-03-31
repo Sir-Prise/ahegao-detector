@@ -1,3 +1,5 @@
+@use "sass:math";
+
 // $hotterpink: #f90f84;
 
 .progress-border {
@@ -9,7 +11,7 @@
 
     margin: 2rem 0;
     border: $border-width solid pink;
-    border-radius: $width / 2;
+    border-radius: math.div($width, 2);
     height: $height;
     width: $inner-width;
     padding: $border-width;
@@ -53,7 +55,7 @@
     .progress-wrapper {
         height: 100%;
         width: 100%;
-        border-radius: $inner-width / 2;
+        border-radius: math.div($inner-width, 2);
         overflow: hidden;
         display: flex;
         flex-direction: column-reverse;
@@ -90,7 +92,7 @@
                 margin-bottom: .3em;
                 padding-bottom: .2em;
                 animation: 2s infinite point-down;
-                
+
                 @media (orientation: portrait) {
                     display: none;
                 }
@@ -99,7 +101,7 @@
             &.arrow-right {
                 margin-left: -.3em;
                 padding-top: .05em;
-                
+
                 @media (orientation: landscape) {
                     display: none;
                 }
@@ -108,7 +110,7 @@
             &.arrow-left {
                 margin-left: .3em;
                 padding-top: .05em;
-                
+
                 @media (orientation: landscape) {
                     display: none;
                 }
