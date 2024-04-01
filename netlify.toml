@@ -1,0 +1,5 @@
+[[redirects]]
+    from = "/"
+    to = "https://ahegao-detector.pages.dev/"
+    status = 302 # TODO: Change to 301 when working
+    force = true
