@@ -15,7 +15,7 @@
             <app-device-connector></app-device-connector>
             <app-progress
                 [intensity]="deviceService.intensity$ | async"
-                [isIncreasing]="detectionLoopService.isRunning && (progressService.intensity$ | async)?.activeIntensity"
+                [isIncreasing]="detectionLoopService.isRunning && (progressService.intensity$ | async)?.activeIntensity > 0"
                 [isDecreasing]="detectionLoopService.isRunning && (progressService.intensity$ | async)?.activeIntensity === 0 && (progressService.intensity$ | async)?.intensity > 0"
             ></app-progress>
             <button (click)="onPause()" appAutoBlur *ngIf="detectionLoopService.isRunning && webcamConnector.showWebcam">
@@ -34,7 +34,7 @@
     </div>
 </main>
 <footer>
-    © 2020 –
+    © 2023 –
     Source Code on <a href="https://github.com/Sir-Prise/ahegao-detector" rel="noopener nofollow" target="_blank">Github</a> –
-    This website uses Google Analytics: <a href="https://www.google.com/policies/privacy/partners/" rel="noopener nofollow" target="_blank">Privacy</a> 
+    This website uses Google Analytics: <a href="https://www.google.com/policies/privacy/partners/" rel="noopener nofollow" target="_blank">Privacy</a>
 </footer>

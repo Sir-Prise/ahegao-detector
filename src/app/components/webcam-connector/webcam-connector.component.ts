@@ -14,7 +14,7 @@ export class WebcamConnectorComponent implements OnInit {
     public webcamComponent: WebcamComponent;
 
     @Output()
-    public loaded = new EventEmitter<HTMLMediaElement>();
+    public loaded = new EventEmitter<HTMLVideoElement>();
 
     public showWebcam = false;
     public showNotAllowedError = false;
@@ -24,7 +24,7 @@ export class WebcamConnectorComponent implements OnInit {
     public readonly isFirefox = typeof window['InstallTrigger'] !== 'undefined';
 
     private isModelLoaded$: Observable<void>;
-    private isWebcamLoaded$: Observable<HTMLMediaElement>;
+    private isWebcamLoaded$: Observable<HTMLVideoElement>;
 
     constructor(
         private readonly detectionService: DetectionService,
